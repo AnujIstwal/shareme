@@ -1,22 +1,35 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc'; //google logo
+// import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
+import jwt_decode from 'jwt-decode'; //used to decode jwt token
+import { client } from '../client';
 
 function Login() {
-  const responseGoogle = response => {
-    console.log(response);
-    // localStorage.setItem('user', JSON.stringify(response.profileObj));
-    // const { name, googleId, imageUrl } = response.profileObj;
+  const navigate = useNavigate();
 
-    // const doc ={
-    //   _id = googleId,
-    //   _type = 'user',
-    //   userName = name,
-    //   image = imageUrl,
-    // }
+  const responseGoogle = response => {
+    const userObject = jwt_decode(response.credential);
+
+    console.log(userObject);
+
+    localStorage.setItem('user', JSON.stringify(userObject));
+    const { name, email, picture } = userObject;
+
+    let docId = email.replace('@gmail.com', '');
+
+    const doc = {
+      _id: docId,
+      _type: 'user',
+      userName: name,
+      image: picture,
+    };
+
+    client.createIfNotExists(doc).then(() => {
+      navigate('/', { replace: true });
+    });
   };
 
   return (
