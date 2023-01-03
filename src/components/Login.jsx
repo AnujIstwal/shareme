@@ -13,8 +13,6 @@ function Login() {
   const responseGoogle = response => {
     const userObject = jwt_decode(response.credential);
 
-    console.log(userObject);
-
     localStorage.setItem('user', JSON.stringify(userObject));
     const { name, email, picture } = userObject;
 
