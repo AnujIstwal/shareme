@@ -10,15 +10,13 @@ import {
 
 import { client } from '../client';
 import { userQuery } from '../utils/data';
+import { fetchUser } from '../utils/fetchUser';
 
 const Pins = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [user, setUser] = useState(null);
 
-  const userInfo =
-    localStorage.getItem('user') !== 'undefined'
-      ? JSON.parse(localStorage.getItem('user'))
-      : localStorage.clear();
+  const userInfo = fetchUser();
 
   useEffect(() => {
     const query = userQuery(userInfo?.email);
