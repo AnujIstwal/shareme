@@ -23,7 +23,7 @@ const Pins = () => {
     client.fetch(query).then(data => {
       setUser(data[0]);
     });
-  }, []);
+  }, [userInfo?.email]);
 
   return (
     <div className="px-2 md:px-5">
