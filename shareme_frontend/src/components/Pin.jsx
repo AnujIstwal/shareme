@@ -14,7 +14,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const user = fetchUser();
 
   const alreadySaved = !!save?.filter(
-    item => item?.postedBy?._id === user?.email.replace('@gmail.com', '')
+    item => item?.postedBy?._id === user?.email?.replace('@gmail.com', '')
   )?.length;
 
   const savePin = id => {
@@ -25,10 +25,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         .insert('after', 'save[-1]', [
           {
             _key: uuidv4(),
-            userId: user?.email.replace('@gmail.com', ''),
+            userId: user?.email?.replace('@gmail.com', ''),
             postedBy: {
               _type: 'postedBy',
-              _ref: user?.email.replace('@gmail.com', ''),
+              _ref: user?.email?.replace('@gmail.com', ''),
             },
           },
         ])
@@ -108,7 +108,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     : destination.slice(8)}
                 </a>
               )}
-              {postedBy?._id === user?.email.replace('@gmail.com', '') && (
+              {postedBy?._id === user?.email?.replace('@gmail.com', '') && (
                 <button
                   type="button"
                   className="bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
